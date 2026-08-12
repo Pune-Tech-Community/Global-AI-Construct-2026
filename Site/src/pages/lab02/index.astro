@@ -1,0 +1,13 @@
+---
+import { getCollection, render } from 'astro:content';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { getModulesWithTitles } from '../../lib/labModules';
+
+const overviews = await getCollection('labOverviews');
+const overview = overviews.find((e) => e.id.startsWith('lab02'))!;
+const { Content } = await render(overview);
+const modules = await getModulesWithTitles('lab02Modules');
+---
+<DocsLayout title="Lab 02 - Multi-Agent Workflow" lab="lab02" labTitle="Lab 02" modules={modules}>
+  <Content />
+</DocsLayout>

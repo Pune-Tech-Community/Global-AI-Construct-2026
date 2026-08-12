@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LabCard from '../components/LabCard.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+<BaseLayout title="Global AI Construct — Pune Workshop Labs">
+  <section class="hero">
+    <div class="inner">
+      <p class="eyebrow">Global AI Community · Pune · August 22, 2026</p>
+      <h1>Construct your first AI agents, step by step.</h1>
+      <p class="lede">
+        Two hands-on labs, built with the Microsoft Foundry Toolkit for VS Code — from a single
+        hosted agent to a multi-agent workflow. Follow along module by module.
+      </p>
+    </div>
+  </section>
+
+  <section class="labs">
+    <div class="inner grid">
+      <LabCard
+        eyebrow="Lab 01"
+        title="Single Agent"
+        description={`Build and deploy an "Explain Like I'm an Executive" agent that turns technical updates into plain-English executive summaries.`}
+        moduleCount={9}
+        duration="~45 min"
+        href={`${base}lab01/`}
+        accent="blue"
+      />
+      <LabCard
+        eyebrow="Lab 02"
+        title="Multi-Agent Workflow"
+        description="Build a Resume → Job Fit Evaluator: four agents that parse a resume, score it against a job description, and produce a personalized learning roadmap."
+        moduleCount={10}
+        duration="~60 min"
+        href={`${base}lab02/`}
+        accent="orange"
+      />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    border-bottom: 1px solid var(--border);
+    background:
+      linear-gradient(180deg, rgba(25, 89, 209, 0.05), transparent 60%),
+      repeating-linear-gradient(0deg, transparent, transparent 39px, var(--border) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, var(--border) 40px);
+  }
+
+  .inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 5rem 1.5rem 4.5rem;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue);
+    margin: 0 0 1rem;
+  }
+
+  h1 {
+    font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+    max-width: 20ch;
+    margin: 0 0 1.25rem;
+  }
+
+  .lede {
+    max-width: 46ch;
+    font-size: 1.15rem;
+    color: var(--slate);
+    margin: 0;
+  }
+
+  .labs .inner {
+    padding-top: 3.5rem;
+    padding-bottom: 4rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: 1.5rem;
+  }
+</style>

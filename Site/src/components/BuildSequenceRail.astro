@@ -1,0 +1,102 @@
+---
+import type { RailModule } from '../lib/labModules';
+
+interface Props {
+  modules: RailModule[];
+  current: string;
+  lab: 'lab01' | 'lab02';
+}
+
+const { modules, current, lab } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const currentIndex = modules.findIndex((m) => m.slug === current);
+---
+<nav class="rail" aria-label="Lab modules">
+  <ol>
+    {modules.map((m, i) => (
+      <li class:list={{ done: i < currentIndex, active: m.slug === current, upcoming: i > currentIndex }}>
+        <a href={`${base}${lab}/${m.slug}/`} aria-current={m.slug === current ? 'page' : undefined}>
+          <span class="node">{m.num}</span>
+          <span class="label">{m.title}</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .rail {
+    position: sticky;
+    top: 5rem;
+    align-self: start;
+    min-width: 0;
+  }
+
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 2px solid var(--border);
+  }
+
+  li {
+    position: relative;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+    color: var(--slate);
+    padding: 0.4rem 0 0.4rem 1.1rem;
+    margin-left: -2px;
+    border-left: 2px solid transparent;
+    font-size: 0.88rem;
+    transition: color 0.15s ease;
+  }
+
+  .node {
+    flex: none;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    color: var(--slate);
+  }
+
+  li.done .node {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: #fff;
+  }
+
+  li.active > a {
+    color: var(--ink);
+    border-left-color: var(--orange);
+    font-weight: 600;
+  }
+
+  li.active .node {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: #fff;
+  }
+
+  a:hover {
+    color: var(--blue);
+  }
+
+  .label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+</style>

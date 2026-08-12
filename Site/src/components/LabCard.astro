@@ -1,0 +1,95 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  moduleCount: number;
+  duration: string;
+  href: string;
+  accent: 'blue' | 'orange';
+}
+
+const { eyebrow, title, description, moduleCount, duration, href, accent } = Astro.props;
+---
+<a class={`lab-card accent-${accent}`} href={href}>
+  <span class="eyebrow">{eyebrow}</span>
+  <h2>{title}</h2>
+  <p>{description}</p>
+  <div class="meta">
+    <span>{moduleCount} modules</span>
+    <span aria-hidden="true">·</span>
+    <span>{duration}</span>
+  </div>
+  <span class="cta">Start the lab →</span>
+</a>
+
+<style>
+  .lab-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 6px solid var(--blue);
+    border-radius: var(--radius);
+    padding: 1.75rem 1.75rem 1.5rem;
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .lab-card.accent-orange {
+    border-left-color: var(--orange);
+  }
+
+  .lab-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -16px rgba(15, 23, 42, 0.35);
+  }
+
+  .lab-card.accent-blue:hover {
+    border-color: var(--blue);
+  }
+
+  .lab-card.accent-orange:hover {
+    border-color: var(--orange);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--slate);
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  p {
+    margin: 0;
+    color: var(--slate);
+    line-height: 1.55;
+  }
+
+  .meta {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--slate);
+    font-family: var(--font-mono);
+  }
+
+  .cta {
+    margin-top: 0.5rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--blue);
+  }
+
+  .accent-orange .cta {
+    color: var(--orange);
+  }
+</style>

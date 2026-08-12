@@ -1,0 +1,19 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { getSortedModules, getModulePage, getModulesWithTitles, slugFor } from '../../lib/labModules';
+
+export async function getStaticPaths() {
+  const entries = await getSortedModules('lab01Modules');
+  return entries.map((entry) => ({
+    params: { slug: slugFor(entry) },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content, title } = await getModulePage(entry);
+const modules = await getModulesWithTitles('lab01Modules');
+---
+<DocsLayout title={title} lab="lab01" labTitle="Lab 01" modules={modules} current={slugFor(entry)}>
+  <Content />
+</DocsLayout>

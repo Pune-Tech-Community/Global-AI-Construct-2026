@@ -1,0 +1,114 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import BuildSequenceRail from '../components/BuildSequenceRail.astro';
+import Mermaid from '../components/Mermaid.astro';
+import type { RailModule } from '../lib/labModules';
+
+interface Props {
+  title: string;
+  lab: 'lab01' | 'lab02';
+  labTitle: string;
+  modules: RailModule[];
+  current?: string;
+}
+
+const { title, lab, labTitle, modules, current } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const currentIndex = modules.findIndex((m) => m.slug === current);
+const prev = currentIndex > 0 ? modules[currentIndex - 1] : undefined;
+const next = currentIndex >= 0 && currentIndex < modules.length - 1 ? modules[currentIndex + 1] : undefined;
+---
+<BaseLayout title={`${title} · ${labTitle}`}>
+  <div class="docs">
+    <BuildSequenceRail modules={modules} current={current ?? ''} lab={lab} />
+    <article class="content">
+      <p class="lab-eyebrow"><a href={`${base}${lab}/`}>{labTitle}</a></p>
+      <slot />
+      {(prev || next) && (
+        <nav class="prev-next" aria-label="Module navigation">
+          {prev ? (
+            <a class="prev" href={`${base}${lab}/${prev.slug}/`}>← {prev.title}</a>
+          ) : <span />}
+          {next ? (
+            <a class="next" href={`${base}${lab}/${next.slug}/`}>{next.title} →</a>
+          ) : <span />}
+        </nav>
+      )}
+    </article>
+  </div>
+  <Mermaid />
+</BaseLayout>
+
+<style>
+  .docs {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+    display: grid;
+    grid-template-columns: 14rem minmax(0, var(--content-width));
+    gap: 3rem;
+    justify-content: center;
+  }
+
+  .content {
+    min-width: 0;
+  }
+
+  .lab-eyebrow {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .lab-eyebrow a {
+    color: var(--slate);
+    text-decoration: none;
+  }
+
+  .content :global(h1) {
+    font-size: 2rem;
+    margin-top: 0;
+  }
+
+  .content :global(h2) {
+    margin-top: 2.25rem;
+  }
+
+  .content :global(table) {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .prev-next {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  .prev-next a {
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .prev-next a:hover {
+    color: var(--blue);
+  }
+
+  .next {
+    margin-left: auto;
+    text-align: right;
+  }
+
+  @media (max-width: 55rem) {
+    .docs {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
