@@ -1,0 +1,7 @@
+# Use the narrow Foundry subpackages to keep dependencies light.
+agent-framework-foundry
+agent-framework-foundry-hosting
+mcp<2,>=1.24.0
+
+# debugpy enables local debugging of this agent with the Foundry Toolkit VS Code extension.
+debugpy

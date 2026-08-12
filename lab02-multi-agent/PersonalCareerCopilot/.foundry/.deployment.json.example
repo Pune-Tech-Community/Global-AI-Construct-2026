@@ -1,0 +1,7 @@
+{
+  "hostedAgentDeployOptions": {
+    "deploymentMethod": "container"
+  },
+  "projectId": "<your_project_id>",
+  "containerRegistry": "<your_container_registry>"
+}
