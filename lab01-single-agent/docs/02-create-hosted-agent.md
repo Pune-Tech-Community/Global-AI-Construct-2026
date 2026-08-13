@@ -75,27 +75,39 @@ Click **create** to create our agent. A new folder will be created with the host
 After scaffolding completes, verify you see these files in the Explorer (`Ctrl+Shift+E`):
 
 ```
-📂 my-agent/
-├── .env                ← Environment variables (placeholders)
-├── .vscode/
-│   ├── launch.json     ← Debug config (F5 → run + Agent Inspector)
-│   └── tasks.json      ← VS Code task definitions
-├── agent.yaml          ← Agent definition (kind: hosted)
-├── Dockerfile          ← Container config for deployment
-├── main.py             ← Agent entry point (your main code)
-└── requirements.txt    ← Python dependencies
+📂 EXECUTIVE-SUMMARY-AGENT/
+├── .foundry/ 
+├── .vscode/ 
+├── src/ 
+│ └── agent-framework-agent-basic-responses/ 
+│       ├── .azdignore 
+│       ├── .dockerignore 
+│       ├── .env              ← Environment variables (placeholders)
+│       ├── Dockerfile        ← Container config for deployment
+│       ├── main.py           ← Agent entry point (your main code)
+│       └── requirements.txt  ← Python dependencies
+├── AGENTS.md 
+├── azure.yaml                ← Agent definition (kind: hosted)
+├── CLAUDE.md 
+└── README.md
 ```
 
 ### Key files explained
 
 | File | Purpose |
-|------|---------|
-| `agent.yaml` | Declares the agent as `kind: hosted`, maps environment variables, defines the `/responses` protocol |
-| `main.py` | Creates a `FoundryChatClient` → wraps it in an `Agent` with instructions → serves via `ResponsesHostServer` on port 8088 |
-| `Dockerfile` | Uses `python:3.12-slim`, installs dependencies, exposes port 8088, runs `main.py` |
-| `requirements.txt` | `agent-framework-foundry`, `agent-framework-foundry-hosting`, `mcp`, `debugpy` |
+|---|---|
+| `src/agent-framework-agent-basic-responses/main.py` | Agent entry point containing the main application and agent logic. |
+| `src/agent-framework-agent-basic-responses/requirements.txt` | Defines the Python dependencies required by the agent application. |
+| `src/agent-framework-agent-basic-responses/Dockerfile` | Defines the container configuration used to build and run the agent application. |
+| `src/agent-framework-agent-basic-responses/.env` | Stores environment variables and local configuration used by the application. |
+| `src/agent-framework-agent-basic-responses/.dockerignore` | Specifies files and directories that should be excluded from the Docker build context. |
+| `src/agent-framework-agent-basic-responses/.azdignore` | Specifies files and directories that Azure Developer CLI (`azd`) should exclude during packaging or deployment. |
+| `azure.yaml` | Defines the Azure Developer CLI project and service configuration used for deployment. |
+| `AGENTS.md` | Provides project-level instructions and context for AI coding agents working with the repository. |
+| `CLAUDE.md` | Provides project-specific instructions and context for Claude-based development workflows. |
+| `README.md` | Contains the main project documentation, setup instructions, and usage information. |
 
-> **Important:** Open the scaffolded agent folder directly in VS Code (the `agent/` folder itself) so that `.vscode/launch.json` and `tasks.json` work correctly for F5 debugging.
+> **Note:** The agent application files now live under `src/agent-framework-agent-basic-responses/` rather than directly in the project root.
 
 ---
 
