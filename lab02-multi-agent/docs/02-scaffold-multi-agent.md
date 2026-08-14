@@ -43,7 +43,7 @@ flowchart LR
 | **Language** | Python | C# (.NET) also supported |
 | **Framework** | Agent Framework | Provides `Agent`, `AgentExecutor`, `WorkflowBuilder` |
 | **API type** | Response API | `POST /responses` - platform-managed history, streaming support |
-| **Template** | **Workflows** | Processes requests through multiple agents in sequence |
+| **Template** | **Multi-Agent Workflow (Agent Framework)** | Processes requests through multiple agents in sequence |
 
 2. Once selected, click **Next**
 
@@ -67,32 +67,48 @@ flowchart LR
 
 After scaffolding completes, verify you see these files in the Explorer (`Ctrl+Shift+E`):
 
-```
-📂 <your-agent-name>/
-├── .azdignore          ← Files excluded from Azure Developer CLI deployments
-├── .dockerignore       ← Files excluded from Docker builds
-├── .env                ← Environment variables (placeholders - fill in Module 3)
+```text
+📂 PersonalCareerCopilot/
+├── .foundry/
+│   └── .deployment.json    ← Azure AI Foundry deployment configuration
 ├── .vscode/
-│   ├── launch.json     ← Debug config (F5 → run + Agent Inspector)
-│   └── tasks.json      ← VS Code task definitions
-├── agent.yaml          ← Agent definition (kind: hosted, protocol: responses)
-├── Dockerfile          ← Container config for deployment
-├── main.py             ← Stub agent entry point (replace with WorkflowBuilder in Module 3)
-└── requirements.txt    ← Python dependencies
+│   ├── launch.json         ← Debug configuration (F5 → run + Agent Inspector)
+│   └── tasks.json          ← VS Code task definitions
+├── src/
+│   └── agent-framework-workflows-responses/
+│       ├── .azdignore      ← Files excluded from Azure Developer CLI deployments
+│       ├── .dockerignore   ← Files excluded from Docker builds
+│       ├── .env            ← Environment variables (placeholders - fill in Module 3)
+│       ├── Dockerfile      ← Container configuration for deployment
+│       ├── main.py         ← Stub agent entry point (replace with WorkflowBuilder in Module 3)
+│       └── requirements.txt ← Python dependencies
+├── AGENTS.md               ← Agent/project guidance and instructions
+├── azure.yaml              ← Azure Developer CLI (azd) project configuration
+├── CLAUDE.md               ← Claude-specific project guidance
+└── README.md               ← Project documentation
 ```
 
-> **Important:** Open this scaffolded folder directly in VS Code so that `.vscode/launch.json` and `tasks.json` apply correctly for F5 debugging.
+> **Important:** Open the `PersonalCareerCopilot` project folder directly in VS Code so that the root-level `.vscode/launch.json` and `.vscode/tasks.json` configurations apply correctly for F5 debugging.
 
 ### Key files explained
 
 | File | Purpose |
 |------|---------|
-| `agent.yaml` | Declares `kind: hosted`, maps env vars, defines the `/responses` protocol |
-| `main.py` | Stub: one `FoundryChatClient` → `Agent` → `ResponsesHostServer`. You replace this with 4 agents + `WorkflowBuilder` in Module 3 |
-| `Dockerfile` | `python:3.12-slim`, installs `requirements.txt`, exposes port 8088, runs `python main.py` |
-| `requirements.txt` | `agent-framework-foundry`, `agent-framework-foundry-hosting`, `mcp<2,>=1.24.0`, `debugpy` |
+| `.foundry/.deployment.json` | Stores Azure AI Foundry deployment configuration and metadata |
+| `.vscode/launch.json` | Defines the VS Code F5 debugging configuration, including launching the agent and Agent Inspector |
+| `.vscode/tasks.json` | Defines supporting VS Code tasks used during local development and debugging |
+| `src/agent-framework-workflows-responses/main.py` | Stub agent entry point. Replace the scaffolded implementation with 4 agents + `WorkflowBuilder` in Module 3 |
+| `src/agent-framework-workflows-responses/Dockerfile` | Container configuration for the hosted agent deployment |
+| `src/agent-framework-workflows-responses/requirements.txt` | Python dependencies required by the agent application |
+| `src/agent-framework-workflows-responses/.env` | Local environment variables and configuration placeholders |
+| `src/agent-framework-workflows-responses/.azdignore` | Specifies files excluded from Azure Developer CLI deployments |
+| `src/agent-framework-workflows-responses/.dockerignore` | Specifies files excluded from the Docker build context |
+| `azure.yaml` | Defines the Azure Developer CLI (`azd`) project and deployment configuration |
+| `AGENTS.md` | Contains repository-level instructions and guidance for AI coding agents |
+| `CLAUDE.md` | Contains project guidance intended for Claude-based development workflows |
+| `README.md` | Top-level project documentation and setup guidance |
 
-> **Reference:** See [`PersonalCareerCopilot/agent.yaml`](../PersonalCareerCopilot/agent.yaml) and [`PersonalCareerCopilot/requirements.txt`](../PersonalCareerCopilot/requirements.txt) for the complete generated content.
+> **Reference:** The agent implementation files are now located under `src/agent-framework-workflows-responses/`. See [`src/agent-framework-workflows-responses/main.py`](../PersonalCareerCopilot/src/agent-framework-workflows-responses/main.py) and [`src/agent-framework-workflows-responses/requirements.txt`](../PersonalCareerCopilot/src/agent-framework-workflows-responses/requirements.txt) for the generated agent content.
 
 ---
 

@@ -41,7 +41,7 @@ AZURE_AI_MODEL_DEPLOYMENT_NAME=gpt-5-mini (or gpt-4.1-mini)
 ### 🅱️ Path B - Foundry Local
 
 ```env
-AZURE_AI_PROJECT_ENDPOINT=http://localhost:5273/v1
+FOUNDRY_PROJECT_ENDPOINT=http://localhost:5273/v1
 AZURE_AI_MODEL_DEPLOYMENT_NAME=phi-4-mini
 ```
 
@@ -152,6 +152,10 @@ python -m venv .venv
 You should see `(.venv)` in your terminal prompt.
 
 ### 4.3 Install dependencies
+
+```bash
+cd .\src\agent-framework-agent-basic-responses\
+```
 
 ```bash
 pip install -r requirements.txt
